@@ -36,6 +36,10 @@
                 }
             },
             "autoload": {
+                "files": [
+                    "src/Illuminate/Foundation/helpers.php",
+                    "src/Illuminate/Support/helpers.php"
+                ],
                 "psr-4": {
                     "Asm89\\Stack\\": "src/"
                 }
