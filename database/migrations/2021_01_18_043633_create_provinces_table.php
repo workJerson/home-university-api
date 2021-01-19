@@ -19,6 +19,7 @@ class CreateProvincesTable extends Migration
             $table->string('provDesc');
             $table->unsignedBigInteger('regCode')->nullable();
             $table->unsignedBigInteger('provCode')->nullable();
+            $table->timestamps();
 
             $table->foreign('regCode')->references('regCode')->on('regions');
             $table->index('psgcCode');

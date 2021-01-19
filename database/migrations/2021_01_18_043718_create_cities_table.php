@@ -20,6 +20,7 @@ class CreateCitiesTable extends Migration
             $table->string('regDesc');
             $table->unsignedBigInteger('provCode');
             $table->string('citymunCode');
+            $table->timestamps();
 
             $table->foreign('provCode')->references('provCode')->on('provinces');
             $table->index('psgcCode');
