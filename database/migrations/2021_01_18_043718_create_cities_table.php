@@ -15,7 +15,7 @@ class CreateCitiesTable extends Migration
     {
         Schema::create('cities', function (Blueprint $table) {
             $table->id();
-            $table->string('psgcCode');
+            $table->unsignedBigInteger('psgcCode');
             $table->string('citymunDesc');
             $table->string('regDesc');
             $table->unsignedBigInteger('provCode');

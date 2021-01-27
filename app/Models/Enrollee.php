@@ -6,7 +6,7 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserDetail extends Model
+class Enrollee extends Model
 {
     use HasFactory;
     use Filterable;
@@ -22,12 +22,23 @@ class UserDetail extends Model
         'regcode',
         'provCode',
         'psgcCode',
+        'years_in_government',
+        'current_employment',
+        'position',
+        'enrollment_status',
+        'program_id',
+        'course_id',
         'status',
     ];
 
-    public function user()
+    public function program()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(Program::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 
     public function region()
