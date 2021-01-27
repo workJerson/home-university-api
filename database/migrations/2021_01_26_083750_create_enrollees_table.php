@@ -36,10 +36,14 @@ class CreateEnrolleesTable extends Migration
             $table->foreign('regcode')->references('regcode')->on('regions');
             $table->foreign('provCode')->references('provCode')->on('provinces');
             $table->foreign('psgcCode')->references('psgcCode')->on('cities');
+            $table->foreign('program_id')->references('id')->on('programs');
+            $table->foreign('course_id')->references('id')->on('courses');
 
             $table->index('regcode');
             $table->index('provCode');
             $table->index('psgcCode');
+            $table->index('program_id');
+            $table->index('course_id');
         });
     }
 

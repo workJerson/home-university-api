@@ -18,6 +18,8 @@ class Student extends Model
         'position',
         'user_id',
         'school_id',
+        'program_id',
+        'course_id',
         'status',
     ];
 
@@ -29,5 +31,15 @@ class Student extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 }

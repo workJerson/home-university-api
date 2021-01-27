@@ -16,4 +16,14 @@ class Course extends Model
         'description',
         'status',
     ];
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
+    public function enrollees()
+    {
+        return $this->hasMany(Enrollee::class);
+    }
 }
