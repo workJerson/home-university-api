@@ -1,5 +1,14 @@
 <?php
 
+use App\Http\Controllers\CityController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -33,7 +42,7 @@ use Illuminate\Support\Facades\Route;
         }
     );
     Route::group(
-        ['prefix' => 'settings', 'namespace' => 'App\Http\Controllers'],
+        ['prefix' => 'settings'],
         function () {
             Route::resource('regions', RegionController::class, ['only' => ['index', 'show']]);
             Route::resource('provinces', ProvinceController::class, ['only' => ['index', 'show']]);
