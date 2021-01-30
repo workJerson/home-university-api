@@ -15,7 +15,6 @@ class Enrollee extends Model
         'first_name',
         'last_name',
         'middle_name',
-        'address',
         'birth_date',
         'contact_number',
         'user_id',
@@ -30,6 +29,24 @@ class Enrollee extends Model
         'course_id',
         'status',
     ];
+
+    public function searchable()
+    {
+        return [
+            'first_name',
+            'last_name',
+            'middle_name',
+            'birth_date',
+            'contact_number',
+            'years_in_government',
+            'current_employment',
+            'position',
+            'enrollment_status',
+            'program_name',
+            'course_name',
+            'status',
+        ];
+    }
 
     public function program()
     {

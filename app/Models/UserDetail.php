@@ -15,7 +15,6 @@ class UserDetail extends Model
         'first_name',
         'last_name',
         'middle_name',
-        'address',
         'birth_date',
         'contact_number',
         'user_id',

@@ -76,8 +76,54 @@ class User extends Authenticatable implements CanResetPassword
         $this->save();
     }
 
+    /**
+     * Set Password Attribute of User.
+     */
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
+    }
+
+    /**
+     * @var int
+     *          Account Type
+     *          SuperAdmin =1
+     *          AdminStaff = 2
+     *          SchoolAdmin = 3
+     *          Student = 4
+     */
+    public function isSuperAdmin()
+    {
+        return $this->account_type = 1;
+    }
+
+    public function isAdminStaff()
+    {
+        return $this->account_type = 2;
+    }
+
+    public function isSchoolAdmin()
+    {
+        return $this->account_type = 3;
+    }
+
+    public function isStudent()
+    {
+        return $this->account_type = 4;
+    }
+
+    public function detail()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
+
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
+    public function school()
+    {
+        return $this->hasOne(School::class);
     }
 }
