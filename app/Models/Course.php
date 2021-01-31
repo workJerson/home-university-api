@@ -14,6 +14,7 @@ class Course extends Model
     protected $fillable = [
         'name',
         'description',
+        'program_id',
         'status',
     ];
 
@@ -34,5 +35,10 @@ class Course extends Model
     public function enrollees()
     {
         return $this->hasMany(Enrollee::class);
+    }
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class);
     }
 }

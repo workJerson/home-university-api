@@ -13,7 +13,12 @@ class Program extends Model
 
     protected $fillable = [
         'name',
-        'course',
+        'description',
         'status',
     ];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
 }
