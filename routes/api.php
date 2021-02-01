@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProvinceController;
@@ -42,11 +43,12 @@ use Illuminate\Support\Facades\Route;
         }
     );
     Route::group(
-        ['prefix' => 'settings'],
+        ['prefix' => 'landing'],
         function () {
             Route::resource('regions', RegionController::class, ['only' => ['index', 'show']]);
             Route::resource('provinces', ProvinceController::class, ['only' => ['index', 'show']]);
             Route::resource('cities', CityController::class, ['only' => ['index', 'show']]);
+            Route::get('settings', LandingPageController::class)->name('settings');
         }
     );
 
