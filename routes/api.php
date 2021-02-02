@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrolleeController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
@@ -10,7 +11,6 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestimonialController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
         Route::resource('school', SchoolController::class, ['except' => ['edit', 'create']]);
         Route::resource('student', StudentController::class, ['except' => ['edit', 'create']]);
         Route::resource('testimonial', TestimonialController::class, ['except' => ['edit', 'create']]);
+        Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
     });
     Route::group(
         ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
@@ -52,6 +53,10 @@ use Illuminate\Support\Facades\Route;
         }
     );
 
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::group(
+        ['prefix' => 'public'],
+        function () {
+            Route::get('programs', ProgramController::class)->name('programs');
+            Route::resource('enrollee', EnrolleeController::class, ['only' => ['store']]);
+        }
+    );

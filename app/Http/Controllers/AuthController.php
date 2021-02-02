@@ -18,7 +18,6 @@ class AuthController extends Controller
         ]);
 
         $credentials = request(['email', 'password']);
-
         if (!Auth::attempt($credentials)) {
             $userCheck = (new User())->findForPassport($request->input('email') ?? $request->input('username'));
 
@@ -63,6 +62,11 @@ class AuthController extends Controller
             )->toDateTimeString(),
             'user' => $user->load(
                 // Load user related entities here
+                [
+                    'detail',
+                    'student',
+                    'school',
+                ]
             ),
         ]);
     }

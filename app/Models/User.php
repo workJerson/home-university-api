@@ -6,11 +6,13 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword
 {
     use HasFactory;
     use Notifiable;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +20,7 @@ class User extends Authenticatable implements CanResetPassword
      * @var array
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
         'account_type',
@@ -74,6 +76,11 @@ class User extends Authenticatable implements CanResetPassword
         $this->status = 0;
 
         $this->save();
+    }
+
+    public function findForPassport($email)
+    {
+        return self::where('email', $email)->first();
     }
 
     /**

@@ -21,7 +21,7 @@ class SuperAdminSeeder extends Seeder
             ],
             [
                 'email' => 'huAdmin@yopmail.com',
-                'password' => bcrypt('Password@123'),
+                'password' => 'Password@123',
                 'account_type' => 1,
                 'status' => 1,
             ]

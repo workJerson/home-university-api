@@ -12,6 +12,7 @@ class Enrollee extends Model
     use Filterable;
 
     protected $fillable = [
+        'email_address',
         'first_name',
         'last_name',
         'middle_name',
@@ -60,7 +61,7 @@ class Enrollee extends Model
 
     public function region()
     {
-        return $this->belongsTo(Region::class, 'regcode', 'regcode');
+        return $this->belongsTo(Region::class, 'regcode', 'regCode');
     }
 
     public function province()
@@ -71,5 +72,10 @@ class Enrollee extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'psgcCode', 'psgcCode');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(EnrolleeAttachment::class);
     }
 }
