@@ -105,6 +105,10 @@ class CreateEnrolleeRequest extends FormRequest
                 'sometimes',
                 'string',
             ],
+            'years_in_government' => [
+                'required',
+                'string',
+            ],
             'profile_picture' => [
                 'sometimes',
                 'required',
