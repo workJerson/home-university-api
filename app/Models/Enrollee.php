@@ -12,7 +12,8 @@ class Enrollee extends Model
     use Filterable;
 
     protected $fillable = [
-        'email_address',
+        'primary_email',
+        'secondary_email',
         'first_name',
         'last_name',
         'middle_name',
@@ -28,20 +29,38 @@ class Enrollee extends Model
         'enrollment_status',
         'program_id',
         'course_id',
+        'age',
+        'department',
+        'address',
+        'zip',
+        'profile_picture',
+        'professional_license',
         'status',
     ];
 
     public function searchable()
     {
         return [
+            'primary_email',
+            'secondary_email',
             'first_name',
             'last_name',
             'middle_name',
             'birth_date',
             'contact_number',
+            'user_id',
+            'regcode',
+            'provCode',
+            'psgcCode',
             'years_in_government',
             'current_employment',
             'position',
+            'age',
+            'department',
+            'address',
+            'zip',
+            'profile_picture',
+            'professional_license',
             'enrollment_status',
             'program_name',
             'course_name',

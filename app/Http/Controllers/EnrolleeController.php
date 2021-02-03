@@ -6,6 +6,7 @@ use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Enrollee\CreateEnrolleeRequest;
 use App\Models\Enrollee;
 use App\Models\EnrolleeAttachment;
+use App\Models\EnrolleeSchool;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,42 @@ class EnrolleeController extends Controller
             DB::beginTransaction();
             $attachments = [];
             $enrolleeObject = $enrollee->create($request->validated());
+
+            if ($request->hs_name) {
+                EnrolleeSchool::create([
+                    'name' => $request->hs_name,
+                    'year_graduated' => $request->hs_year_graduated ?? '',
+                    'address' => $request->hs_address ?? '',
+                    'type' => 'HS',
+                    'enrollee_id' => $enrolleeObject->id,
+                ]);
+            }
+
+            if ($request->college_name) {
+                EnrolleeSchool::create([
+                    'name' => $request->college_name,
+                    'year_graduated' => $request->college_year_graduated ?? '',
+                    'address' => $request->college_address ?? '',
+                    'type' => 'CL',
+                    'enrollee_id' => $enrolleeObject->id,
+                ]);
+            }
+
+            if ($request->masters_name) {
+                EnrolleeSchool::create([
+                    'name' => $request->masters_name,
+                    'year_graduated' => $request->masters_year_graduated ?? '',
+                    'address' => $request->masters_address ?? '',
+                    'type' => 'MS',
+                    'enrollee_id' => $enrolleeObject->id,
+                ]);
+            }
+
+            if ($request->profile_picture) {
+                $path = Storage::putFile('images', $request->file('profile_picture'), 'public');
+                $enrolleeObject->profile_picture = $path;
+                $enrolleeObject->save();
+            }
 
             if ($request->attachments) {
                 foreach ($request->file('attachments') as $key => $file) {

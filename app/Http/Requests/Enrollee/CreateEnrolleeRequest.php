@@ -24,8 +24,12 @@ class CreateEnrolleeRequest extends FormRequest
     public function rules()
     {
         return [
-            'email_address' => [
+            'primary_email' => [
                 'required',
+                'email',
+            ],
+            'secondary_email' => [
+                'sometimes',
                 'email',
             ],
             'first_name' => [
@@ -45,6 +49,14 @@ class CreateEnrolleeRequest extends FormRequest
                 'string',
             ],
             'contact_number' => [
+                'required',
+                'string',
+            ],
+            'address' => [
+                'required',
+                'string',
+            ],
+            'zip' => [
                 'required',
                 'string',
             ],
@@ -81,12 +93,72 @@ class CreateEnrolleeRequest extends FormRequest
                 'numeric',
                 'exists:courses,id',
             ],
+            'age' => [
+                'required',
+                'numeric',
+            ],
+            'department' => [
+                'sometimes',
+                'string',
+            ],
+            'professional_license' => [
+                'sometimes',
+                'string',
+            ],
+            'profile_picture' => [
+                'sometimes',
+                'required',
+                'mimes:jpg,jpeg,png,bmp',
+                'max:4096',
+            ],
             'attachments' => 'sometimes|required|array',
             'attachments.*' => [
                 'sometimes',
                 'required',
                 'mimes:pdf,jpg,jpeg,png,bmp',
                 'max:4096',
+            ],
+
+            // School details
+            'hs_name' => [
+                'sometimes',
+                'string',
+            ],
+            'hs_year_graduated' => [
+                'sometimes',
+                'string',
+            ],
+            'hs_address' => [
+                'sometimes',
+                'string',
+            ],
+
+            // College
+            'college_name' => [
+                'sometimes',
+                'string',
+            ],
+            'college_year_graduated' => [
+                'sometimes',
+                'string',
+            ],
+            'college_address' => [
+                'sometimes',
+                'string',
+            ],
+
+            // Masters
+            'masters_name' => [
+                'sometimes',
+                'string',
+            ],
+            'masters_year_graduated' => [
+                'sometimes',
+                'string',
+            ],
+            'masters_address' => [
+                'sometimes',
+                'string',
             ],
         ];
     }
