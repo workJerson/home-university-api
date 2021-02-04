@@ -17,19 +17,18 @@ class SuperAdminSeeder extends Seeder
     {
         $superAdmin = User::updateOrCreate(
             [
-                'username' => 'huAdmin',
+                'email' => 'huAdmin@yopmail.com',
             ],
             [
-                'email' => 'huAdmin@yopmail.com',
                 'password' => 'Password@123',
                 'account_type' => 1,
                 'status' => 1,
             ]
         );
 
-        if ($superAdmin->userDetail) {
+        if ($superAdmin->detail) {
             $superAdmin
-                ->userDetail()
+                ->detail()
                 ->update([
                     'first_name' => 'HU',
                     'last_name' => 'Admin',

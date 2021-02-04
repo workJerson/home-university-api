@@ -2,17 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\CanResetPassword;
+use App\Traits\Filterable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordClass;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable implements CanResetPassword
+class User extends Authenticatable implements CanResetPasswordClass
 {
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
+    use CanResetPassword;
+    use Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +24,6 @@ class User extends Authenticatable implements CanResetPassword
      * @var array
      */
     protected $fillable = [
-        'username',
         'email',
         'password',
         'account_type',

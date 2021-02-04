@@ -11,6 +11,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,15 +29,19 @@ use Illuminate\Support\Facades\Route;
             ->name('forgot-password');
         Route::post('reset-password', 'App\Http\Controllers\ResetPasswordController@resetPassword')
                 ->name('reset-password');
-
-        Route::resource('course', CourseController::class, ['except' => ['edit', 'create']]);
-        Route::resource('news', NewsController::class, ['except' => ['edit', 'create']]);
-        Route::resource('program', ProgramController::class, ['except' => ['edit', 'create']]);
-        Route::resource('school', SchoolController::class, ['except' => ['edit', 'create']]);
-        Route::resource('student', StudentController::class, ['except' => ['edit', 'create']]);
-        Route::resource('testimonial', TestimonialController::class, ['except' => ['edit', 'create']]);
-        Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
     });
+    Route::group(
+        ['middleware' => 'auth:api'],
+        function () {
+            Route::resource('course', CourseController::class, ['except' => ['edit', 'create']]);
+            Route::resource('news', NewsController::class, ['except' => ['edit', 'create']]);
+            Route::resource('program', ProgramController::class, ['except' => ['edit', 'create']]);
+            Route::resource('school', SchoolController::class, ['except' => ['edit', 'create']]);
+            Route::resource('student', StudentController::class, ['except' => ['edit', 'create']]);
+            Route::resource('testimonial', TestimonialController::class, ['except' => ['edit', 'create']]);
+            Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
+            Route::resource('user', UserController::class, ['except' => ['edit', 'create']]);
+        });
     Route::group(
         ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
         function () {
