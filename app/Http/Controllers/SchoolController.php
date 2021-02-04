@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Filters\ResourceFilters;
+use App\Http\Requests\School\CreateSchoolRequest;
+use App\Models\School;
 
 class SchoolController extends Controller
 {
@@ -11,9 +13,15 @@ class SchoolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ResourceFilters $filters, School $school)
     {
-        //
+        return $this->generateCachedResponse(function () use ($filters, $school) {
+            $schools = $school
+                    ->filter($filters)
+                    ->where('status', '!=', 2);
+
+            return $this->paginateOrGet($schools);
+        });
     }
 
     /**
@@ -23,62 +31,66 @@ class SchoolController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateSchoolRequest $request, School $school)
     {
-        //
+        $request = $request->validated();
+        $schoolObject = $school->create($request);
+
+        return response($schoolObject, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(School $school)
     {
-        //
+        $school = $school;
+
+        return response($school);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateSchoolRequest $request, School $school)
     {
-        //
+        $school->update($request->validated());
+
+        return response($school);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(School $school)
     {
-        //
+        $school->status = 2;
+        $school->save();
+
+        return response('deleted', 200);
     }
 }

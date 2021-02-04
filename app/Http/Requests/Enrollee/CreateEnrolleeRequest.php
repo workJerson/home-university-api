@@ -60,7 +60,7 @@ class CreateEnrolleeRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'regcode' => [
+            'regCode' => [
                 'required',
                 'numeric',
                 'exists:regions,regcode',
@@ -98,6 +98,10 @@ class CreateEnrolleeRequest extends FormRequest
                 'numeric',
             ],
             'department' => [
+                'sometimes',
+                'string',
+            ],
+            'registration_code' => [
                 'sometimes',
                 'string',
             ],

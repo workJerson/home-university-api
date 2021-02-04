@@ -35,6 +35,7 @@ class Enrollee extends Model
         'zip',
         'profile_picture',
         'professional_license',
+        'registration_code',
         'status',
     ];
 
