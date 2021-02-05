@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Enrollee\CreateEnrolleeRequest;
+use App\Mail\EmailSend;
 use App\Models\Enrollee;
 use App\Models\EnrolleeAttachment;
 use App\Models\EnrolleeSchool;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class EnrolleeController extends Controller
@@ -109,6 +111,7 @@ class EnrolleeController extends Controller
                 EnrolleeAttachment::insert($attachments);
             }
             DB::commit();
+            Mail::to($enrolleeObject->primary_email)->send(new EmailSend(['name' => $enrolleeObject->full_name, 'subject' => 'Pre-Enrollment'], 'mail.enrollee.new'));
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;

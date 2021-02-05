@@ -11,6 +11,8 @@ class Enrollee extends Model
     use HasFactory;
     use Filterable;
 
+    protected $appends = ['full_name'];
+
     protected $fillable = [
         'primary_email',
         'secondary_email',
@@ -67,6 +69,11 @@ class Enrollee extends Model
             'course_name',
             'status',
         ];
+    }
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->last_name).', '.ucfirst($this->first_name).' '.ucfirst($this->middle_name ?? '');
     }
 
     public function program()
