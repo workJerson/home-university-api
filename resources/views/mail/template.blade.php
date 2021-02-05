@@ -10,15 +10,18 @@
     <table border='0' cellpadding='0' cellspacing='0' style='background-color: #ffffff; width: 800px;'>
        <tbody>
           <tr>
-             <td style='background-color: #e9f2f8; font-size: 16px; border-bottom: 10px solid #15a4db;'>
+             <td style='background: linear-gradient(90deg,#f8c6c7 25%,#c7d7f8 85%); font-size: 16px;'>
                 <table align='left' border='0' cellpadding='0' cellspacing='0' width='70' style=' width: 100%;'>
                    <tbody>
                       <tr>
-                         <td height='120' style='padding: 0 0 0 30px;'><img src='https://optimus-storage-files.s3.amazonaws.com/XLOGPNG.png' style='width: 120px; height: 120px; max-width: none;' /></td>
+                         <td height='120' style='padding: 0 0 0 40px;'><img src='https://home-university.com/assets/icons/HU.png' style='width: 70px; height: 70px; max-width: none;' /></td>
                       </tr>
                    </tbody>
                 </table>
              </td>
+          </tr>
+          <tr>
+            <td style='height: 10px; padding: 0px; margin: 0px; background: linear-gradient(90deg,#ef4444 25%,#3b82f6 85%);'></td>
           </tr>
           <tr>
              <td style='padding: 20px 30px;'>
@@ -35,17 +38,20 @@
              </td>
           </tr>
           <tr>
-             <td style='padding: 0px 0px 0px 0px; border-top: 7px solid #15a4db;'>
+              <td style='height: 10px; padding: 0px; margin: 0px; background: linear-gradient(90deg,#ef4444 25%,#3b82f6 85%);'></td>
+          </tr>
+          <tr>
+             <td style='padding: 0px; margin: 0px;'>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                    <tbody>
                       <tr>
-                         <td style='background: #e9f2f8; padding: 20px 30px 10px 30px;'>
+                         <td style='background: linear-gradient(90deg,#f8c6c7 25%,#c7d7f8 85%); padding: 20px 30px 10px 30px;'>
                             <table border='0' cellpadding='0' cellspacing='0' style='border-collapse: collapse; font-family: Helvetica, Arial, sans-serif; font-weight: 300;' width='100%'>
                                <tbody>
                                   <tr>
-                                     <td align='left' colspan='2' style='color: #646465; font-size: 11px;'><span style=' font-weight: bold;'>Shiptek Solutions Pte. Ltd.</span><br />20 Maxwell Road<br />Maxwell House, Singapore</td>
-                                     <td align='center' colspan='2' style='color: #646465; font-size: 11px;'><a target='_blank' href='https://web.xlog.net/' style='color: #646465; text-decoration: none; font-size: 12px; text-decoration: underline;'>www.xlog.net</a></td>
-                                     <td align='right' rowspan='2' style='padding-left: 30px; color: #646465; font-size: 11px;'><a href='mailto:info@myxlog.com' style='color: #646465; text-decoration: none; text-decoration: underline;'>info@myxlog.com</a><br />+63 2 869 7340</td>
+                                     <td align='left' colspan='2' style='color: #646465; font-size: 11px;'><span style=' font-weight: bold; font-size: 15px;'>Home University</span><br />Room 101, Philippine Social Science Council,<br />Inc. PSSC Center, Commonwealth Avenue Diliman,<br />Quezon City</td>
+                                     <td align='center' colspan='2' style='color: #646465; font-size: 11px;'><a target='_blank' href='https://home-university.com' style='color: #646465; text-decoration: none; font-size: 12px; text-decoration: underline;'>www.home-university.com</a></td>
+                                     <td align='right' rowspan='2' style='padding-left: 30px; color: #646465; font-size: 11px;'><a href='mailto:homeuniversity2021@gmail.com' style='color: #646465; text-decoration: none; text-decoration: underline;'>homeuniversity2021@gmail.com</a><br /><a href='mailto:homeuniversity2021@yahoo.com' style='color: #646465; text-decoration: none; text-decoration: underline;'>homeuniversity2021@yahoo.com</a></td>
                                   </tr>
                                </tbody>
                             </table>
