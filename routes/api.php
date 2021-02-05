@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Route;
             Route::resource('testimonial', TestimonialController::class, ['except' => ['edit', 'create']]);
             Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
             Route::resource('user', UserController::class, ['except' => ['edit', 'create']]);
+            Route::resource('files', FileController::class, ['except' => ['edit', 'create']]);
         });
     Route::group(
         ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
@@ -63,5 +64,8 @@ use Illuminate\Support\Facades\Route;
         function () {
             Route::get('programs', ProgramController::class)->name('programs');
             Route::resource('enrollee', EnrolleeController::class, ['only' => ['store']]);
+
+            Route::get('files/{path}', 'App\Http\Controllers\FileController@show')->name('files.show')
+                    ->where('path', '(.*)');
         }
     );
