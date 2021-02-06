@@ -64,7 +64,7 @@ use Illuminate\Support\Facades\Route;
         function () {
             Route::get('programs', ProgramController::class)->name('programs');
             Route::resource('enrollee', EnrolleeController::class, ['only' => ['store']]);
-
+            Route::get('enrollee/credential/{enrollee}', 'App\Http\Controllers\EnrolleeController@generateCredential');
             Route::get('files/{path}', 'App\Http\Controllers\FileController@show')->name('files.show')
                     ->where('path', '(.*)');
         }

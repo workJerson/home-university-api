@@ -8,6 +8,7 @@ use App\Mail\EmailSend;
 use App\Models\Enrollee;
 use App\Models\EnrolleeAttachment;
 use App\Models\EnrolleeSchool;
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,28 @@ use Illuminate\Support\Facades\Storage;
 
 class EnrolleeController extends Controller
 {
+    public function generateCredential(Enrollee $enrollee)
+    {
+        $enrollees['enrollees'] = [$enrollee
+            ->load([
+                'program',
+                'course',
+                'region',
+                'province',
+                'city',
+                'attachments',
+            ]), ];
+
+        $pdf = PDF::loadView('pdf.credential', $enrollees);
+        $fileName = Carbon::now()->format('Ymdhis');
+
+        return $pdf->download("CRED$fileName.pdf");
+    }
+
+    public function generateReport(ResourceFilters $filters, Enrollee $enrollee)
+    {
+    }
+
     /**
      * Display a listing of the resource.
      *
