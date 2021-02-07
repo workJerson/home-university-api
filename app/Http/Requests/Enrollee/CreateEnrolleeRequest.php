@@ -129,15 +129,15 @@ class CreateEnrolleeRequest extends FormRequest
 
             // School details
             'hs_name' => [
-                'sometimes',
+                'required',
                 'string',
             ],
             'hs_year_graduated' => [
-                'sometimes',
+                'required',
                 'string',
             ],
             'hs_address' => [
-                'sometimes',
+                'required',
                 'string',
             ],
 

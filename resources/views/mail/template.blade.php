@@ -10,7 +10,7 @@
     <table border='0' cellpadding='0' cellspacing='0' style='background-color: #ffffff; width: 800px;'>
        <tbody>
           <tr>
-             <td style='background: linear-gradient(90deg,#f8c6c7 25%,#c7d7f8 85%); font-size: 16px;'>
+             <td style='background-color: #f7f7f7; font-size: 16px;'>
                 <table align='left' border='0' cellpadding='0' cellspacing='0' width='70' style=' width: 100%;'>
                    <tbody>
                       <tr>
@@ -21,7 +21,7 @@
              </td>
           </tr>
           <tr>
-            <td style='height: 10px; padding: 0px; margin: 0px; background: linear-gradient(90deg,#ef4444 25%,#3b82f6 85%);'></td>
+            <td style='height: 10px; padding: 0px; margin: 0px; background-color: #e4e4e4;'></td>
           </tr>
           <tr>
              <td style='padding: 20px 30px;'>
@@ -38,14 +38,14 @@
              </td>
           </tr>
           <tr>
-              <td style='height: 10px; padding: 0px; margin: 0px; background: linear-gradient(90deg,#ef4444 25%,#3b82f6 85%);'></td>
+              <td style='height: 10px; padding: 0px; margin: 0px; background: #e4e4e4;'></td>
           </tr>
           <tr>
              <td style='padding: 0px; margin: 0px;'>
                 <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                    <tbody>
                       <tr>
-                         <td style='background: linear-gradient(90deg,#f8c6c7 25%,#c7d7f8 85%); padding: 20px 30px 10px 30px;'>
+                         <td style='background-color: #f7f7f7; padding: 20px 30px 10px 30px;'>
                             <table border='0' cellpadding='0' cellspacing='0' style='border-collapse: collapse; font-family: Helvetica, Arial, sans-serif; font-weight: 300;' width='100%'>
                                <tbody>
                                   <tr>
