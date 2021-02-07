@@ -39,6 +39,8 @@ class EnrolleeController extends Controller
 
     public function generateReport(ResourceFilters $filters, Enrollee $enrollee)
     {
+        $date = Carbon::now()->format('Ymdhis');
+
         return Excel::download(
             new EnrolleeExport(
                 $enrollee
@@ -46,7 +48,7 @@ class EnrolleeController extends Controller
                     ->with([
                     ])
                     ->get()
-            ), 'report.xlsx');
+            ), "ENROLLEES$date.xlsx");
     }
 
     /**
