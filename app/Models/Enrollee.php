@@ -11,7 +11,7 @@ class Enrollee extends Model
     use HasFactory;
     use Filterable;
 
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'full_address', 'attachment_links'];
 
     protected $fillable = [
         'primary_email',
@@ -69,6 +69,25 @@ class Enrollee extends Model
             'course_name',
             'status',
         ];
+    }
+
+    public function getCreatedAtConvertedAttribute()
+    {
+        return $this->created_at->timezone('Asia/Manila')->toDayDateTimeString();
+    }
+
+    public function getAttachmentLinksAttribute()
+    {
+        return $this->attachments->pluck('file_path')->toArray();
+    }
+
+    public function getFullAddressAttribute()
+    {
+        return ucfirst($this->address)
+        .', '.ucfirst($this->zip)
+        .', '.ucfirst($this->city->citymunDesc)
+        .', '.ucfirst($this->province->provDesc)
+        .', '.ucfirst($this->region->regDesc);
     }
 
     public function getFullNameAttribute()

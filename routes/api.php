@@ -62,6 +62,7 @@ use Illuminate\Support\Facades\Route;
     Route::group(
         ['prefix' => 'public'],
         function () {
+            Route::get('enrollee/tempo/report', 'App\Http\Controllers\EnrolleeController@generateReport');
             Route::get('programs', ProgramController::class)->name('programs');
             Route::resource('enrollee', EnrolleeController::class, ['only' => ['store']]);
             Route::get('enrollee/credential/{enrollee}', 'App\Http\Controllers\EnrolleeController@generateCredential');

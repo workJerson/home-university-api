@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    dd(config('app.url'));
+
     return view('welcome');
 });

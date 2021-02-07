@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\EnrolleeExport;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Enrollee\CreateEnrolleeRequest;
 use App\Mail\EmailSend;
@@ -14,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EnrolleeController extends Controller
 {
@@ -37,6 +39,14 @@ class EnrolleeController extends Controller
 
     public function generateReport(ResourceFilters $filters, Enrollee $enrollee)
     {
+        return Excel::download(
+            new EnrolleeExport(
+                $enrollee
+                    ->filter($filters)
+                    ->with([
+                    ])
+                    ->get()
+            ), 'report.xlsx');
     }
 
     /**
