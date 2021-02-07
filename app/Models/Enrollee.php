@@ -22,7 +22,7 @@ class Enrollee extends Model
         'birth_date',
         'contact_number',
         'user_id',
-        'regcode',
+        'regCode',
         'provCode',
         'psgcCode',
         'years_in_government',
@@ -52,7 +52,7 @@ class Enrollee extends Model
             'birth_date',
             'contact_number',
             'user_id',
-            'regcode',
+            'regCode',
             'provCode',
             'psgcCode',
             'years_in_government',
@@ -88,7 +88,7 @@ class Enrollee extends Model
 
     public function region()
     {
-        return $this->belongsTo(Region::class, 'regcode', 'regCode');
+        return $this->belongsTo(Region::class, 'regCode', 'regCode');
     }
 
     public function province()

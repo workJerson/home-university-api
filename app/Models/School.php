@@ -18,7 +18,7 @@ class School extends Model
         'user_id',
         'image_path',
         'order',
-        'regcode',
+        'regCode',
         'provCode',
         'psgcCode',
         'status',

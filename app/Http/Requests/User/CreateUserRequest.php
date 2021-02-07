@@ -56,10 +56,10 @@ class CreateUserRequest extends FormRequest
                 'min:11',
                 'max:11',
             ],
-            'regcode' => [
+            'regCode' => [
                 'required',
                 'numeric',
-                'exists:regions,regcode',
+                'exists:regions,regCode',
             ],
             'provCode' => [
                 'required',

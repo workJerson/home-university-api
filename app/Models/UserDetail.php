@@ -18,7 +18,7 @@ class UserDetail extends Model
         'birth_date',
         'contact_number',
         'user_id',
-        'regcode',
+        'regCode',
         'provCode',
         'psgcCode',
         'status',
@@ -31,7 +31,7 @@ class UserDetail extends Model
 
     public function region()
     {
-        return $this->belongsTo(Region::class, 'regcode', 'regcode');
+        return $this->belongsTo(Region::class, 'regCode', 'regCode');
     }
 
     public function province()
