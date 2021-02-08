@@ -29,7 +29,7 @@ class CreateEnrolleeRequest extends FormRequest
                 'email',
             ],
             'secondary_email' => [
-                'sometimes',
+                'nullable',
                 'email',
             ],
             'first_name' => [
@@ -98,15 +98,15 @@ class CreateEnrolleeRequest extends FormRequest
                 'numeric',
             ],
             'department' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'registration_code' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'professional_license' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'years_in_government' => [
@@ -114,7 +114,7 @@ class CreateEnrolleeRequest extends FormRequest
                 'string',
             ],
             'profile_picture' => [
-                'sometimes',
+                'nullable',
                 'required',
                 'mimes:jpg,jpeg,png,bmp',
                 'max:4096',
@@ -143,29 +143,29 @@ class CreateEnrolleeRequest extends FormRequest
 
             // College
             'college_name' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'college_year_graduated' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'college_address' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
 
             // Masters
             'masters_name' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'masters_year_graduated' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
             'masters_address' => [
-                'sometimes',
+                'nullable',
                 'string',
             ],
         ];
