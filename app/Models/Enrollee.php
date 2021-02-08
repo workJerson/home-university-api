@@ -11,7 +11,7 @@ class Enrollee extends Model
     use HasFactory;
     use Filterable;
 
-    protected $appends = ['full_name', 'full_address', 'attachment_links'];
+    protected $appends = ['full_name', 'full_address', 'attachment_links', 'high_school', 'college', 'masters'];
 
     protected $fillable = [
         'primary_email',
@@ -71,6 +71,21 @@ class Enrollee extends Model
         ];
     }
 
+    public function getHighSchoolAttribute()
+    {
+        return $this->enrolleeSchools->where('type', 'HS')->first();
+    }
+
+    public function getCollegeAttribute()
+    {
+        return $this->enrolleeSchools->where('type', 'CL')->first();
+    }
+
+    public function getMastersAttribute()
+    {
+        return $this->enrolleeSchools->where('type', 'MS')->first();
+    }
+
     public function getCreatedAtConvertedAttribute()
     {
         return $this->created_at->timezone('Asia/Manila')->toDayDateTimeString();
@@ -123,5 +138,10 @@ class Enrollee extends Model
     public function attachments()
     {
         return $this->hasMany(EnrolleeAttachment::class);
+    }
+
+    public function enrolleeSchools()
+    {
+        return $this->hasMany(EnrolleeSchool::class);
     }
 }

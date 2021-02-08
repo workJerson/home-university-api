@@ -18,4 +18,9 @@ class EnrolleeSchool extends Model
         'type',
         'enrollee_id',
     ];
+
+    public function enrollee()
+    {
+        return $this->belongsTo(Enrollee::class);
+    }
 }
