@@ -24,7 +24,7 @@ class EnrolleeExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
         'Current Employer',
         'Position',
         'Department',
-        'Professional License',
+        // 'Professional License',
         'Registration Code',
         'High School',
         // 'High Graduated Year',
