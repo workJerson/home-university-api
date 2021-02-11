@@ -56,10 +56,10 @@ class CreateEnrolleeRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'zip' => [
-                'required',
-                'string',
-            ],
+            // 'zip' => [
+            //     'nullable',
+            //     'string',
+            // ],
             'regCode' => [
                 'required',
                 'numeric',
@@ -105,17 +105,16 @@ class CreateEnrolleeRequest extends FormRequest
                 'nullable',
                 'string',
             ],
-            'professional_license' => [
-                'nullable',
-                'string',
-            ],
+            // 'professional_license' => [
+            //     'nullable',
+            //     'string',
+            // ],
             'years_in_government' => [
                 'required',
                 'string',
             ],
             'profile_picture' => [
                 'nullable',
-                'required',
                 'mimes:jpg,jpeg,png,bmp',
                 'max:4096',
             ],
@@ -132,42 +131,42 @@ class CreateEnrolleeRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'hs_year_graduated' => [
-                'required',
-                'string',
-            ],
-            'hs_address' => [
-                'required',
-                'string',
-            ],
+            // 'hs_year_graduated' => [
+            //     'required',
+            //     'string',
+            // ],
+            // 'hs_address' => [
+            //     'required',
+            //     'string',
+            // ],
 
             // College
             'college_name' => [
                 'nullable',
                 'string',
             ],
-            'college_year_graduated' => [
-                'nullable',
-                'string',
-            ],
-            'college_address' => [
-                'nullable',
-                'string',
-            ],
+            // 'college_year_graduated' => [
+            //     'nullable',
+            //     'string',
+            // ],
+            // 'college_address' => [
+            //     'nullable',
+            //     'string',
+            // ],
 
             // Masters
             'masters_name' => [
                 'nullable',
                 'string',
             ],
-            'masters_year_graduated' => [
-                'nullable',
-                'string',
-            ],
-            'masters_address' => [
-                'nullable',
-                'string',
-            ],
+            // 'masters_year_graduated' => [
+            //     'nullable',
+            //     'string',
+            // ],
+            // 'masters_address' => [
+            //     'nullable',
+            //     'string',
+            // ],
         ];
     }
 }

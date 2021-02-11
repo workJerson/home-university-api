@@ -99,7 +99,7 @@ class Enrollee extends Model
     public function getFullAddressAttribute()
     {
         return ucfirst($this->address)
-        .', '.ucfirst($this->zip)
+        // .', '.ucfirst($this->zip)
         .', '.ucfirst($this->city->citymunDesc)
         .', '.ucfirst($this->province->provDesc)
         .', '.ucfirst($this->region->regDesc);

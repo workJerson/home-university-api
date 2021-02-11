@@ -98,8 +98,8 @@ class EnrolleeController extends Controller
             if ($request->hs_name) {
                 EnrolleeSchool::create([
                     'name' => $request->hs_name,
-                    'year_graduated' => $request->hs_year_graduated ?? '',
-                    'address' => $request->hs_address ?? '',
+                    // 'year_graduated' => $request->hs_year_graduated ?? '',
+                    // 'address' => $request->hs_address ?? '',
                     'type' => 'HS',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
@@ -108,8 +108,8 @@ class EnrolleeController extends Controller
             if ($request->college_name) {
                 EnrolleeSchool::create([
                     'name' => $request->college_name,
-                    'year_graduated' => $request->college_year_graduated ?? '',
-                    'address' => $request->college_address ?? '',
+                    // 'year_graduated' => $request->college_year_graduated ?? '',
+                    // 'address' => $request->college_address ?? '',
                     'type' => 'CL',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
@@ -118,8 +118,8 @@ class EnrolleeController extends Controller
             if ($request->masters_name) {
                 EnrolleeSchool::create([
                     'name' => $request->masters_name,
-                    'year_graduated' => $request->masters_year_graduated ?? '',
-                    'address' => $request->masters_address ?? '',
+                    // 'year_graduated' => $request->masters_year_graduated ?? '',
+                    // 'address' => $request->masters_address ?? '',
                     'type' => 'MS',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
