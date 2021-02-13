@@ -169,4 +169,24 @@ class CreateEnrolleeRequest extends FormRequest
             // ],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'First Name is required.',
+            'last_name.required' => 'Last Name is required.',
+            'middle_name.required' => 'Middle Name is required.',
+            'birth_date.required' => 'Birth Date is required.',
+            'contact_number.required' => 'Contact Number is required.',
+            'regCode.required' => 'Region is required.',
+            'provCode.required' => 'Province is required.',
+            'psgcCode.required' => 'City is required.',
+            'current_employment.required' => 'Current Employer is required.',
+            'program_id.required' => 'Program is required.',
+            'course_id.required' => 'Course is required.',
+            'years_in_government.required' => 'Years in service is required.',
+            'attachments.required' => 'TOR/Form 137 attachment is required.',
+            'hs_name.required' => 'High School name is required.',
+        ];
+    }
 }
