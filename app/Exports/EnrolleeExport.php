@@ -80,10 +80,10 @@ class EnrolleeExport implements FromCollection, ShouldAutoSize, WithHeadings, Wi
             optional($enrollee->masters)->name ?? '',
             // optional($enrollee->masters)->year_graduated ?? '',
             // optional($enrollee->masters)->address ?? '',
-            config('app.url')."/files/$enrollee->profile_picture",
+            config('app.url')."api/public/files/$enrollee->profile_picture",
             implode(', ', array_map(
                 function ($attachment) {
-                    return config('app.url')."/files/$attachment";
+                    return config('app.url')."api/public/files/$attachment";
                 },
                 $enrollee->attachment_links
             )),
