@@ -111,7 +111,7 @@ class CreateEnrolleeRequest extends FormRequest
             // ],
             'years_in_government' => [
                 'required',
-                'string',
+                'numeric',
             ],
             'profile_picture' => [
                 'nullable',
