@@ -6,26 +6,19 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class NewsCategory extends Model
 {
     use HasFactory;
     use Filterable;
 
     protected $fillable = [
-        'title',
-        'header',
+        'name',
         'description',
-        'image_path',
         'status',
     ];
 
-    public function images()
+    public function news()
     {
-        return $this->hasMany(NewsImage::class);
-    }
-
-    public function category()
-    {
-        return $this->belongsTo(NewsCategory::class);
+        return $this->hasMany(News::class);
     }
 }

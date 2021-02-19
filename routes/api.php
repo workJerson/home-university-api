@@ -4,6 +4,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EnrolleeController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ProvinceController;
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\Route;
         ['middleware' => 'auth:api'],
         function () {
             Route::resource('course', CourseController::class, ['except' => ['edit', 'create']]);
+            Route::resource('news-category', NewsCategoryController::class, ['except' => ['edit', 'create']]);
             Route::resource('news', NewsController::class, ['except' => ['edit', 'create']]);
             Route::resource('program', ProgramController::class, ['except' => ['edit', 'create']]);
             Route::resource('school', SchoolController::class, ['except' => ['edit', 'create']]);
