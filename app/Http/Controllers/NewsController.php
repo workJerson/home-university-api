@@ -51,6 +51,9 @@ class NewsController extends Controller
             DB::beginTransaction();
             $newsObject = $news->create($request->validated());
 
+            $newsObject->created_by = request()->user()->id;
+            $newsObject->save();
+
             if ($request->image_path) {
                 $path = Storage::putFile('images', $request->file('image_path'), 'public');
                 $newsObject->image_path = $path;

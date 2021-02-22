@@ -29,7 +29,7 @@ class CreateNewsRequest extends FormRequest
                 'string',
             ],
             'header' => [
-                'required',
+                'nullable',
                 'string',
             ],
             'description' => [
@@ -47,7 +47,7 @@ class CreateNewsRequest extends FormRequest
                 'exists:news_categories,id',
             ],
             'created_by' => [
-                'required',
+                'nullable',
                 'numeric',
                 'exists:users,id',
             ],
