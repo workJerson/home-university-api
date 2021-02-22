@@ -11,7 +11,7 @@ class News extends Model
     use HasFactory;
     use Filterable;
 
-    protected $appends = ['image_list'];
+    // protected $appends = ['image_list'];
 
     protected $fillable = [
         'title',
