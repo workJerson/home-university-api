@@ -142,6 +142,12 @@ class CoursesTableSeeder extends Seeder
                 'description' => 'Doctor of Education',
                 'program_id' => 3,
             ],
+            [
+                'id' => 22,
+                'name' => 'Master of Science in Social Working',
+                'description' => 'Master of Science in Social Working',
+                'program_id' => 2,
+            ],
         ];
 
         foreach ($courses as $course) {
