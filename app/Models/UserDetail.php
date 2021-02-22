@@ -10,6 +10,7 @@ class UserDetail extends Model
 {
     use HasFactory;
     use Filterable;
+    protected $appends = ['full_name'];
 
     protected $fillable = [
         'first_name',
@@ -42,5 +43,10 @@ class UserDetail extends Model
     public function city()
     {
         return $this->belongsTo(City::class, 'psgcCode', 'psgcCode');
+    }
+
+    public function getFullNameAttribute()
+    {
+        return ucfirst($this->last_name).', '.ucfirst($this->first_name).' '.ucfirst($this->middle_name ?? '');
     }
 }
