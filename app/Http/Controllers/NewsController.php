@@ -111,12 +111,13 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateNewsRequest $request, News $news)
     {
+        $news->update($request->validated());
+
+        return response($news);
     }
 
     /**

@@ -58,6 +58,11 @@ class CreateNewsRequest extends FormRequest
                 'mimes:pdf,jpg,jpeg,png,bmp',
                 'max:4096',
             ],
+            'status' => [
+                'sometimes',
+                'numeric',
+                'between:0,2',
+            ],
         ];
     }
 }
