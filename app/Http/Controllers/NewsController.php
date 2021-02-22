@@ -22,9 +22,9 @@ class NewsController extends Controller
     {
         return $this->generateCachedResponse(function () use ($filters, $news) {
             $newsList = $news
+                    ->with(['category', 'createdBy.detail'])
                     ->filter($filters)
-                    ->where('status', '!=', 2)
-                    ->with(['category']);
+                    ->where('status', '!=', 2);
 
             return $this->paginateOrGet($newsList);
         });

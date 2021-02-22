@@ -11,6 +11,8 @@ class News extends Model
     use HasFactory;
     use Filterable;
 
+    protected $appends = ['image_list'];
+
     protected $fillable = [
         'title',
         'header',
@@ -20,6 +22,16 @@ class News extends Model
         'created_by',
         'status',
     ];
+
+    public function searchable()
+    {
+        return [
+            'title',
+            'category_name',
+            'createdBy_detail_full_name',
+            'status',
+        ];
+    }
 
     public function images()
     {

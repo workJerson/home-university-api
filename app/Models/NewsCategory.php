@@ -17,6 +17,14 @@ class NewsCategory extends Model
         'status',
     ];
 
+    public function searchable()
+    {
+        return [
+            'name',
+            'status',
+        ];
+    }
+
     public function news()
     {
         return $this->hasMany(News::class);
