@@ -14,7 +14,9 @@ class ProgramController extends Controller
 
     public function __invoke(Program $program)
     {
-        return response($program->with(['courses'])->get());
+        return response($program->with(['courses' => function ($courses) {
+            $courses->where('status', 1);
+        }])->get());
     }
 
     /**
