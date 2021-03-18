@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Exports\EnrolleeExport;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Enrollee\CreateEnrolleeRequest;
+use App\Http\Requests\Enrollee\UpdateEnrolleeRequest;
 use App\Mail\EmailSend;
 use App\Models\Enrollee;
 use App\Models\EnrolleeAttachment;
 use App\Models\EnrolleeSchool;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -178,22 +178,45 @@ class EnrolleeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateEnrolleeRequest $request, Enrollee $enrollee)
     {
+        $request->validated();
+        try {
+            DB::beginTransaction();
+
+            if ($request->enrollment_status) {
+                switch ($request->enrollment_status) {
+                    case 1:
+                        // code...
+                        break;
+
+                    default:
+                        // code...
+                        break;
+                }
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        return response($enrollee);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Enrollee $enrollee)
     {
+        $enrollee->status = 2;
+        $enrollee->save();
+
+        return response(['message' => 'Successfully deleted.'], 200);
     }
 }

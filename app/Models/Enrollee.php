@@ -28,7 +28,7 @@ class Enrollee extends Model
         'years_in_government',
         'current_employment',
         'position',
-        'enrollment_status',
+        'enrollment_status', // 0 = Pending; 1 = Enrolled;
         'program_id',
         'course_id',
         'age',
