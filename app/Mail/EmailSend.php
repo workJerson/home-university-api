@@ -32,9 +32,9 @@ class EmailSend extends Mailable
      */
     public function build()
     {
-        $address = 'no-reply@home-university.com';
+        $address = 'no-reply@u-ed.com';
         $subject = $this->data['subject'];
-        $name = 'Home University';
+        $name = 'U-Ed';
 
         return $this->view($this->route)
             ->from($address, $name)

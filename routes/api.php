@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EnrolleeController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsCategoryController;
@@ -44,6 +45,7 @@ use Illuminate\Support\Facades\Route;
             Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
             Route::resource('user', UserController::class, ['except' => ['edit', 'create']]);
             Route::resource('files', FileController::class, ['except' => ['edit', 'create']]);
+            Route::resource('mail', EmailController::class, ['except' => ['edit', 'create']]);
         });
     Route::group(
         ['prefix' => 'auth', 'namespace' => 'App\Http\Controllers'],
