@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ResourceFilters;
+use App\Http\Requests\Course\CreateCourseRequest;
 use App\Models\Course;
-use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
@@ -15,6 +15,13 @@ class CourseController extends Controller
      */
     public function index(ResourceFilters $filters, Course $course)
     {
+        return $this->generateCachedResponse(function () use ($filters, $course) {
+            $courses = $course->with([
+                'program',
+                ])->filter($filters);
+
+            return $this->paginateOrGet($courses);
+        });
     }
 
     /**
@@ -31,8 +38,11 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCourseRequest $request, Course $course)
     {
+        $courseObject = $course->create($request->validated());
+
+        return response($courseObject, 201);
     }
 
     /**
@@ -42,6 +52,11 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $course->load([
+            'program',
+        ]);
+
+        return $course;
     }
 
     /**
@@ -58,8 +73,11 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(CreateCourseRequest $request, Course $course)
     {
+        $course->update($request->validated());
+
+        return response($course);
     }
 
     /**
@@ -69,5 +87,9 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+        $course->status = 2;
+        $course->save();
+
+        return response(['message' => 'Successfully deleted'], 200);
     }
 }
