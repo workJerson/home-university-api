@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ResourceFilters;
+use App\Http\Requests\Program\CreateProgramRequest;
 use App\Models\Program;
-use Illuminate\Http\Request;
 
 class ProgramController extends Controller
 {
@@ -24,8 +24,14 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ResourceFilters $resourceFilters)
+    public function index(ResourceFilters $filters, Program $program)
     {
+        return $this->generateCachedResponse(function () use ($filters, $program) {
+            $programs = $program->with([
+                ])->filter($filters);
+
+            return $this->paginateOrGet($programs);
+        });
     }
 
     /**
@@ -42,19 +48,25 @@ class ProgramController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateProgramRequest $request, Program $program)
     {
+        $programObject = $program->create($request->validated());
+
+        return response($programObject, 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Program $program)
     {
+        $program->load([
+            'courses',
+        ]);
+
+        return response($program);
     }
 
     /**
@@ -71,22 +83,25 @@ class ProgramController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateProgramRequest $request, Program $program)
     {
+        $program->update($request->validated());
+
+        return response($program);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Program $program)
     {
+        $program->status = 2;
+        $program->save();
+
+        return response(['message' => 'Successfully deleted'], 200);
     }
 }

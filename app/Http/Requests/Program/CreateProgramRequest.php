@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Course;
+namespace App\Http\Requests\Program;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCourseRequest extends FormRequest
+class CreateProgramRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -36,11 +36,6 @@ class CreateCourseRequest extends FormRequest
                 'nullable',
                 'numeric',
                 'between:1,2',
-            ],
-            'program_id' => [
-                'required',
-                'numeric',
-                'exists:programs,id',
             ],
         ];
     }
