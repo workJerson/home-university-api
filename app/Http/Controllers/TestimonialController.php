@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Filters\ResourceFilters;
+use App\Http\Requests\Testimonial\CreateTestimonialRequest;
+use App\Models\Testimonial;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
@@ -11,9 +15,14 @@ class TestimonialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ResourceFilters $filters, Testimonial $testimonial)
     {
-        //
+        return $this->generateCachedResponse(function () use ($filters, $testimonial) {
+            $testimonials = $testimonial->with([
+                ])->filter($filters);
+
+            return $this->paginateOrGet($testimonials);
+        });
     }
 
     /**
@@ -23,62 +32,86 @@ class TestimonialController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateTestimonialRequest $request, Testimonial $testimonial)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $testimonialObject = $testimonial->create($request->validated());
+
+            if ($request->image) {
+                $path = Storage::putFile('images', $request->file('image'), 'public');
+                $testimonialObject->image_path = $path;
+                $testimonialObject->save();
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Testimonial $testimonial)
     {
-        //
+        return response($testimonial);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateTestimonialRequest $request, Testimonial $testimonial)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $testimonial->update($request->validated());
+
+            if ($request->image) {
+                $path = Storage::putFile('images', $request->file('image'), 'public');
+                $testimonial->image_path = $path;
+                $testimonial->save();
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Testimonial $testimonial)
     {
-        //
+        $testimonial->status = 2;
+        $testimonial->save();
+
+        return response(['message' => 'Successfully deleted'], 200);
     }
 }
