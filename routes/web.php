@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // dd(config('app.url'));
+
+    return view('mail.user.reset-password');
 });
