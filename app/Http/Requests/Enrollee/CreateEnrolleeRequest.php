@@ -27,6 +27,7 @@ class CreateEnrolleeRequest extends FormRequest
             'primary_email' => [
                 'required',
                 'email',
+                'unique:enrollees',
             ],
             'secondary_email' => [
                 'nullable',
@@ -187,6 +188,7 @@ class CreateEnrolleeRequest extends FormRequest
             'years_in_government.required' => 'Years in service is required.',
             'attachments.required' => 'TOR/Form 137 attachment is required.',
             'hs_name.required' => 'High School name is required.',
+            'primary_email.unique' => 'This email is already used for enrollment. Please use another email. If you have any concerns, please contact us. Thank you.',
         ];
     }
 }
