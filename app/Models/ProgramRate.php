@@ -6,24 +6,22 @@ use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Program extends Model
+class ProgramRate extends Model
 {
     use HasFactory;
     use Filterable;
 
     protected $fillable = [
-        'name',
         'description',
+        'period',
+        'total_amount',
+        'payment_remarks',
         'status',
+        'program_id',
     ];
 
-    public function courses()
+    public function program()
     {
-        return $this->hasMany(Course::class);
-    }
-
-    public function rates()
-    {
-        return $this->hasMany(ProgramRate::class);
+        return $this->belongsTo(Program::class);
     }
 }
