@@ -21,7 +21,6 @@ class ProgramRateTableSeeder extends Seeder
                 'description' => '',
                 'period' => 'Month 1',
                 'total_amount' => 0.00,
-                'payment_remarks' => '',
                 'program_id' => 1, // Baccalaureate
             ],
             [
@@ -29,7 +28,6 @@ class ProgramRateTableSeeder extends Seeder
                 'description' => '',
                 'period' => 'Month 1',
                 'total_amount' => 0.00,
-                'payment_remarks' => '',
                 'program_id' => 2, // Masters
             ],
             [
@@ -37,7 +35,6 @@ class ProgramRateTableSeeder extends Seeder
                 'description' => '',
                 'period' => 'Month 1',
                 'total_amount' => 0.00,
-                'payment_remarks' => '',
                 'program_id' => 3, // Doctoral
             ],
         ];
