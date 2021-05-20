@@ -42,4 +42,9 @@ class Student extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function enrollee()
+    {
+        return $this->hasOne(Enrollee::class);
+    }
 }

@@ -21,4 +21,9 @@ class Program extends Model
     {
         return $this->hasMany(Course::class);
     }
+
+    public function rates()
+    {
+        return $this->hasMany(ProgramRate::class);
+    }
 }
