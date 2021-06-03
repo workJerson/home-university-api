@@ -197,6 +197,7 @@ class EnrolleeController extends Controller
                         break;
                 }
             }
+            $enrollee->update($request->all());
 
             DB::commit();
         } catch (\Throwable $th) {

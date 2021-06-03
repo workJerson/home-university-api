@@ -78,37 +78,6 @@ class CreateUserRequest extends FormRequest
             ],
         ];
 
-        // Student
-        if ($this->get('account_type') == 4) {
-            $rules['program_id'] = [
-                'required',
-                'numeric',
-                'exists:programs,id',
-            ];
-            $rules['course_id'] = [
-                'required',
-                'numeric',
-                'exists:courses,id',
-            ];
-            $rules['school_id'] = [
-                'required',
-                'numeric',
-                'exists:schools,id',
-            ];
-            $rules['years_in_government'] = [
-                'required',
-                'string',
-            ];
-            $rules['position'] = [
-                'required',
-                'string',
-            ];
-            $rules['current_employment'] = [
-                'required',
-                'string',
-            ];
-        }
-
         return $rules;
     }
 }

@@ -91,6 +91,6 @@ class SchoolController extends Controller
         $school->status = 2;
         $school->save();
 
-        return response('deleted', 200);
+        return response(['message' => 'Successfully deleted'], 200);
     }
 }

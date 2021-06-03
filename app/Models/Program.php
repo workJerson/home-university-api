@@ -17,6 +17,15 @@ class Program extends Model
         'status',
     ];
 
+    public function searchable()
+    {
+        return [
+            'name',
+            'description',
+            'status',
+        ];
+    }
+
     public function courses()
     {
         return $this->hasMany(Course::class);

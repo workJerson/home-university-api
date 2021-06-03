@@ -25,10 +25,16 @@ class SendEmailRequest extends FormRequest
     {
         return [
             'to' => [
+                'required',
+                'string',
             ],
             'subject' => [
+                'required',
+                'string',
             ],
             'body' => [
+                'required',
+                'string',
             ],
         ];
     }
