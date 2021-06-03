@@ -55,6 +55,8 @@ class TestimonialController extends Controller
             DB::rollBack();
             throw $th;
         }
+
+        return response($testimonialObject, 201);
     }
 
     /**
@@ -100,6 +102,8 @@ class TestimonialController extends Controller
             DB::rollBack();
             throw $th;
         }
+
+        return response($testimonial);
     }
 
     /**

@@ -24,6 +24,21 @@ class School extends Model
         'status',
     ];
 
+    public function searchable()
+    {
+        return [
+            'name',
+            'school_email',
+            'address',
+            'status',
+            'user_detail_first_name',
+            'user_detail_last_name',
+            'user_detail_middle_name',
+            'user_detail_birth_date',
+            'user_detail_contact_number',
+        ];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
