@@ -146,7 +146,7 @@ class EnrolleeController extends Controller
                 EnrolleeAttachment::insert($attachments);
             }
             DB::commit();
-            Mail::to($enrolleeObject->primary_email)->send(new EmailSend(['name' => $enrolleeObject->full_name, 'subject' => 'Pre-Enrollment'], 'mail.enrollee.new'));
+            // Mail::to($enrolleeObject->primary_email)->send(new EmailSend(['name' => $enrolleeObject->full_name, 'subject' => 'Pre-Enrollment'], 'mail.enrollee.new'));
         } catch (\Throwable $th) {
             DB::rollBack();
             throw $th;
