@@ -144,4 +144,9 @@ class Enrollee extends Model
     {
         return $this->hasMany(EnrolleeSchool::class);
     }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

@@ -13,13 +13,7 @@ class Student extends Model
 
     protected $fillable = [
         'student_number',
-        'years_in_government',
-        'current_employment',
-        'position',
         'user_id',
-        'school_id',
-        'program_id',
-        'course_id',
         'status',
     ];
 
@@ -41,5 +35,10 @@ class Student extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function enrollee()
+    {
+        return $this->hasOne(Enrollee::class);
     }
 }

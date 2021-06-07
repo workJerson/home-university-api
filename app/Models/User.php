@@ -53,6 +53,18 @@ class User extends Authenticatable implements CanResetPasswordClass
         'email_verified_at' => 'datetime',
     ];
 
+    public function searchable()
+    {
+        return [
+            'email',
+            'detail_first_name',
+            'detail_last_name',
+            'detail_middle_name',
+            'detail_birth_date',
+            'detail_contact_number',
+        ];
+    }
+
     /**
      * Increment the login attempts of the user.
      */

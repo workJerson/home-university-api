@@ -25,6 +25,17 @@ class UserDetail extends Model
         'status',
     ];
 
+    public function searchable()
+    {
+        return [
+            'first_name',
+            'last_name',
+            'middle_name',
+            'birth_date',
+            'contact_number',
+        ];
+    }
+
     public function user()
     {
         $this->belongsTo(User::class);
