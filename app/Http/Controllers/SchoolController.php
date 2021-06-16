@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\School\CreateSchoolRequest;
 use App\Models\School;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class SchoolController extends Controller
@@ -83,12 +84,20 @@ class SchoolController extends Controller
      */
     public function update(CreateSchoolRequest $request, School $school)
     {
-        $school->update($request->validated());
+        try {
+            DB::beginTransaction();
+            $school->update($request->validated());
 
-        if ($request->image) {
-            $path = Storage::putFile('images', $request->file('image'), 'public');
-            $school->image_path = $path;
-            $school->save();
+            if ($request->image) {
+                $path = Storage::putFile('images', $request->file('image'), 'public');
+                $school->image_path = $path;
+                $school->save();
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
         }
 
         return response($school);
