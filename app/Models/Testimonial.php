@@ -29,8 +29,8 @@ class Testimonial extends Model
         ];
     }
 
-    public function setImagePathAttribute($value)
+    public function getImagePathAttribute()
     {
-        $this->attribute['image_path'] = config('app.url').'/api/public/files/'.$value;
+        return config('app.url').'/api/public/files/'.$this->attributes['image_path'];
     }
 }
