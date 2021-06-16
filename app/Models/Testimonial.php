@@ -18,4 +18,14 @@ class Testimonial extends Model
         'image_path',
         'status',
     ];
+
+    public function searchable()
+    {
+        return [
+            'last_name',
+            'testimony',
+            'image_path',
+            'status',
+        ];
+    }
 }

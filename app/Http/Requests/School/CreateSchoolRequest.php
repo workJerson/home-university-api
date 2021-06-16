@@ -38,6 +38,18 @@ class CreateSchoolRequest extends FormRequest
                 'required',
                 'numeric',
             ],
+            'school_email' => [
+                'required',
+                'email',
+            ],
+            'address' => [
+                'required',
+                'string',
+            ],
+            'order' => [
+                'required',
+                'numeric',
+            ],
         ];
     }
 }
