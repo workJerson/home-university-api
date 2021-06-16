@@ -25,6 +25,11 @@ class CreateSchoolRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => [
+                'sometimes',
+                'numeric',
+                'exists:schools,id',
+            ],
             'name' => [
                 'required',
                 'string',

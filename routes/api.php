@@ -39,9 +39,15 @@ use Illuminate\Support\Facades\Route;
             Route::resource('news-category', NewsCategoryController::class, ['except' => ['edit', 'create']]);
             Route::resource('news', NewsController::class, ['except' => ['edit', 'create']]);
             Route::resource('program', ProgramController::class, ['except' => ['edit', 'create']]);
+
             Route::resource('school', SchoolController::class, ['except' => ['edit', 'create']]);
+            Route::post('school/update', 'App\Http\Controllers\SchoolController@updateSchool'); // Form Data Update
+
             Route::resource('student', StudentController::class, ['except' => ['edit', 'create']]);
+
             Route::resource('testimonial', TestimonialController::class, ['except' => ['edit', 'create']]);
+            Route::post('testimonial/update', 'App\Http\Controllers\TestimonialController@updateTestimony'); // Form Data Update
+
             Route::resource('enrollee', EnrolleeController::class, ['except' => ['edit', 'create']]);
             Route::resource('user', UserController::class, ['except' => ['edit', 'create']]);
             Route::resource('files', FileController::class, ['except' => ['edit', 'create']]);
