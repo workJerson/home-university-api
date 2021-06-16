@@ -29,9 +29,10 @@ class CreateSchoolRequest extends FormRequest
                 'required',
                 'string',
             ],
-            'image_path' => [
-                'required',
-                'string',
+            'image' => [
+                'nullable',
+                'mimes:jpg,jpeg,png,bmp',
+                'max:4096',
             ],
             'order' => [
                 'required',
