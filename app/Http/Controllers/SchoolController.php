@@ -54,6 +54,30 @@ class SchoolController extends Controller
         return response($schoolObject, 201);
     }
 
+    public function updateSchool(CreateSchoolRequest $request, School $school)
+    {
+        $request->validated();
+        try {
+            DB::beginTransaction();
+            $school = $school->findOrFail($request->id);
+
+            $school->update($request->validated());
+
+            if ($request->image) {
+                $path = Storage::putFile('images', $request->file('image'), 'public');
+                $school->image_path = $path;
+                $school->save();
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        return response($school);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -84,6 +108,7 @@ class SchoolController extends Controller
      */
     public function update(CreateSchoolRequest $request, School $school)
     {
+        dd($request->all());
         try {
             DB::beginTransaction();
             $school->update($request->validated());

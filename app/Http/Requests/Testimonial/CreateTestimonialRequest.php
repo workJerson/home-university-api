@@ -24,6 +24,11 @@ class CreateTestimonialRequest extends FormRequest
     public function rules()
     {
         return [
+            'id' => [
+                'nullable',
+                'numeric',
+                'exists:testimonials,id',
+            ],
             'first_name' => [
                 'required',
                 'string',

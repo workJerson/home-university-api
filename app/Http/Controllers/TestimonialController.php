@@ -59,6 +59,28 @@ class TestimonialController extends Controller
         return response($testimonialObject, 201);
     }
 
+    public function updateTestimony(CreateTestimonialRequest $request, Testimonial $testimonial)
+    {
+        try {
+            DB::beginTransaction();
+            $testimonial = $testimonial->findOrFail($request->id);
+            $testimonial->update($request->validated());
+
+            if ($request->image) {
+                $path = Storage::putFile('images', $request->file('image'), 'public');
+                $testimonial->image_path = $path;
+                $testimonial->save();
+            }
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
+
+        return response($testimonial);
+    }
+
     /**
      * Display the specified resource.
      *
