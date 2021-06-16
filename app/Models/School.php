@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class School extends Model
 {
@@ -47,5 +48,12 @@ class School extends Model
     public function students()
     {
         return $this->hasMany(Student::class);
+    }
+
+    public function setImagePathAttribute()
+    {
+        $this->attribute['image_path'] = Str::contains($this->image_path, 'hu-landing.s3-website-ap-southeast-1.amazonaws.com')
+            ? $this->image_path
+            : config('app.url').'/api/public/files/'.$this->image_path;
     }
 }
