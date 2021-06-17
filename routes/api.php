@@ -4,6 +4,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EnrolleeController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\NewsCategoryController;
 use App\Http\Controllers\NewsController;
