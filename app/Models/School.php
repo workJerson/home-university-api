@@ -48,4 +48,9 @@ class School extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public function getImagePathAttribute()
+    {
+        return config('app.url').'/api/public/files/'.$this->attributes['image_path'];
+    }
 }

@@ -28,4 +28,9 @@ class Testimonial extends Model
             'status',
         ];
     }
+
+    public function getImagePathAttribute()
+    {
+        return config('app.url').'/api/public/files/'.$this->attributes['image_path'];
+    }
 }
