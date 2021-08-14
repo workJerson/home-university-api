@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Enrollee extends Model
 {
     use HasFactory;
     use Filterable;
+    use SoftDeletes;
 
     protected $appends = ['full_name', 'full_address', 'attachment_links', 'high_school', 'college', 'masters'];
 
@@ -143,10 +145,5 @@ class Enrollee extends Model
     public function enrolleeSchools()
     {
         return $this->hasMany(EnrolleeSchool::class);
-    }
-
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
     }
 }
