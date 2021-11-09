@@ -21,13 +21,13 @@ class AuthService
             $checkUser = $this->user->findForPassport($credentials['username']);
 
             if ($checkUser && $checkUser->login_attempts >= 3 && $checkUser->status == 0) {
-                $checkUser->incrementLoginAttempts();
-
                 return [
                     'status' => 401,
                     'message' => 'Your account is inactive.',
                 ];
             }
+
+            $checkUser->incrementLoginAttempts();
 
             return [
                 'status' => 401,
