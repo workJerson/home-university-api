@@ -147,7 +147,7 @@ class CoursesTableSeeder extends Seeder
                 'name' => 'Doctor of Philosophy in Development Administration',
                 'description' => 'Doctor of Philosophy in Development Administration',
                 'program_id' => 3,
-                'status' => 1,
+                'status' => 2,
             ],
             [
                 'id' => 20,
@@ -183,6 +183,13 @@ class CoursesTableSeeder extends Seeder
                 'description' => 'Bachelor of Science in International Hospitality Management (BSIHM)',
                 'program_id' => 1,
                 'status' => 1,
+            ],
+            [
+                'id' => 25,
+                'name' => 'PhD in Development Administration - Major in Public Governance',
+                'description' => 'PhD in Development Administration - Major in Public Governance',
+                'program_id' => 3,
+                'status' => 2,
             ],
         ];
 
