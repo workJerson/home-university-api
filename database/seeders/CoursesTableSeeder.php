@@ -189,7 +189,7 @@ class CoursesTableSeeder extends Seeder
                 'name' => 'PhD in Development Administration - Major in Public Governance',
                 'description' => 'PhD in Development Administration - Major in Public Governance',
                 'program_id' => 3,
-                'status' => 2,
+                'status' => 1,
             ],
         ];
 
