@@ -59,7 +59,7 @@ class ProgramController extends Controller
      */
     public function store(CreateProgramRequest $request, Program $program)
     {
-        $request->validate();
+        $request->validated();
         $result = $this->service->store($request->all(), $program);
 
         return response($result, 201);
@@ -97,7 +97,7 @@ class ProgramController extends Controller
      */
     public function update(CreateProgramRequest $request, Program $program)
     {
-        $request->validate();
+        $request->validated();
         $program = $this->service->update($request->all(), $program);
 
         return response($program);

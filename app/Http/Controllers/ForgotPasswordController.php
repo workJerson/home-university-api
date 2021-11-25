@@ -16,7 +16,7 @@ class ForgotPasswordController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $request->validate();
+        $request->validated();
         $response = $this->service->forgotPassword($request);
 
         return response($response['message'], $response['status']);

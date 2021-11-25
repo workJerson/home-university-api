@@ -5,11 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\School\CreateSchoolRequest;
 use App\Models\School;
+use App\Services\SchoolService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class SchoolController extends Controller
 {
+    protected $service;
+    public function __construct()
+    {
+        $this->service = new SchoolService();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +24,7 @@ class SchoolController extends Controller
     public function index(ResourceFilters $filters, School $school)
     {
         return $this->generateCachedResponse(function () use ($filters, $school) {
-            $schools = $school
-                    ->filter($filters)
-                    ->where('status', '!=', 2);
+            $schools = $this->service->index($filters, $school);
 
             return $this->paginateOrGet($schools);
         });
@@ -42,38 +46,16 @@ class SchoolController extends Controller
      */
     public function store(CreateSchoolRequest $request, School $school)
     {
-        $request = $request;
-        $schoolObject = $school->create($request->validated());
+        $request->validated();
+        $result = $this->service->store($request, $school);
 
-        if ($request->image) {
-            $path = Storage::putFile('images', $request->file('image'), 'public');
-            $schoolObject->image_path = $path;
-            $schoolObject->save();
-        }
-
-        return response($schoolObject, 201);
+        return response($result, 201);
     }
 
     public function updateSchool(CreateSchoolRequest $request, School $school)
     {
         $request->validated();
-        try {
-            DB::beginTransaction();
-            $school = $school->findOrFail($request->id);
-
-            $school->update($request->validated());
-
-            if ($request->image) {
-                $path = Storage::putFile('images', $request->file('image'), 'public');
-                $school->image_path = $path;
-                $school->save();
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
+        $school = $this->service->update($request, $school);
 
         return response($school);
     }
@@ -108,22 +90,8 @@ class SchoolController extends Controller
      */
     public function update(CreateSchoolRequest $request, School $school)
     {
-        dd($request->all());
-        try {
-            DB::beginTransaction();
-            $school->update($request->validated());
-
-            if ($request->image) {
-                $path = Storage::putFile('images', $request->file('image'), 'public');
-                $school->image_path = $path;
-                $school->save();
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
+        $request->validated();
+        $school = $this->service->update($request, $school);
 
         return response($school);
     }
@@ -135,8 +103,7 @@ class SchoolController extends Controller
      */
     public function destroy(School $school)
     {
-        $school->status = 2;
-        $school->save();
+        $this->service->delete($school);
 
         return response(['message' => 'Successfully deleted'], 200);
     }

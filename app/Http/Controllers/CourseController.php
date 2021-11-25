@@ -48,7 +48,7 @@ class CourseController extends Controller
      */
     public function store(CreateCourseRequest $request, Course $course)
     {
-        $request->validate();
+        $request->validated();
         $result = $this->service->create($request->all());
 
         return response($result, 201);
@@ -84,7 +84,7 @@ class CourseController extends Controller
      */
     public function update(CreateCourseRequest $request, Course $course)
     {
-        $request->validate();
+        $request->validated();
         $result = $this->service->update($request->all(), $course);
 
         return response($result);
