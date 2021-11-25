@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 
 class AuthService
 {
@@ -54,6 +55,23 @@ class AuthService
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
             'user' => $user->load(['detail', 'school']),
+        ];
+    }
+
+    public function forgotPassword($request)
+    {
+        $statusCode = 400;
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        if ($status == Password::RESET_LINK_SENT) {
+            $statusCode = 200;
+        }
+
+        return [
+            'message' => trans($status),
+            'status' => $statusCode,
         ];
     }
 }

@@ -2,40 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
+use App\Services\AuthService;
 
 class ForgotPasswordController extends Controller
 {
+    protected $service;
+
     public function __construct()
     {
+        $this->service = new AuthService();
     }
 
-    public function forgotPassword(Request $request)
+    public function forgotPassword(ForgotPasswordRequest $request)
     {
-        $request->validate(['email' => [
-            'required',
-            'email',
-            'exists:users,email',
-        ]]);
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+        $request->validate();
+        $response = $this->service->forgotPassword($request->all());
 
-        return $status == Password::RESET_LINK_SENT
-                    ? $this->sendResetLinkResponse($status)
-                    : $this->sendResetLinkFailedResponse($request, $status);
-    }
-
-    protected function sendResetLinkResponse($status)
-    {
-        return response([
-            'message' => trans($status),
-        ]);
-    }
-
-    protected function sendResetLinkFailedResponse($request, $status)
-    {
-        return response(trans($status), 400);
+        return response($response['message'], $response['status']);
     }
 }
