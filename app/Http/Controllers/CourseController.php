@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Course\CreateCourseRequest;
 use App\Models\Course;
+use App\Services\CourseService;
 
 class CourseController extends Controller
 {
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new CourseService();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,9 +48,10 @@ class CourseController extends Controller
      */
     public function store(CreateCourseRequest $request, Course $course)
     {
-        $courseObject = $course->create($request->validated());
+        $request->validate();
+        $result = $this->service->create($request->all());
 
-        return response($courseObject, 201);
+        return response($result, 201);
     }
 
     /**
@@ -75,9 +84,10 @@ class CourseController extends Controller
      */
     public function update(CreateCourseRequest $request, Course $course)
     {
-        $course->update($request->validated());
+        $request->validate();
+        $result = $this->service->update($request->all(), $course);
 
-        return response($course);
+        return response($result);
     }
 
     /**
@@ -87,8 +97,7 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        $course->status = 2;
-        $course->save();
+        $this->service->delete($course);
 
         return response(['message' => 'Successfully deleted'], 200);
     }
