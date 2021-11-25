@@ -61,7 +61,7 @@ class EnrolleeController extends Controller
     public function store(CreateEnrolleeRequest $request, Enrollee $enrollee)
     {
         $request->validate();
-        $enrolleeObject = $this->service->store($request->all(), $enrollee);
+        $enrolleeObject = $this->service->store($request, $enrollee);
 
         return response($enrolleeObject, 201);
     }
@@ -94,7 +94,7 @@ class EnrolleeController extends Controller
     public function update(UpdateEnrolleeRequest $request, Enrollee $enrollee)
     {
         $request->validate();
-        $enrollee = $this->service->update($request->all(), $enrollee);
+        $enrollee = $this->service->update($request, $enrollee);
 
         return response($enrollee);
     }

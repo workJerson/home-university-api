@@ -71,13 +71,11 @@ class EnrolleeService
         try {
             DB::beginTransaction();
             $attachments = [];
-            $enrolleeObject = $enrollee->create($request->validated());
+            $enrolleeObject = $enrollee->create($request->all());
 
             if ($request->hs_name) {
                 EnrolleeSchool::create([
                     'name' => $request->hs_name,
-                    // 'year_graduated' => $request->hs_year_graduated ?? '',
-                    // 'address' => $request->hs_address ?? '',
                     'type' => 'HS',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
@@ -86,8 +84,6 @@ class EnrolleeService
             if ($request->college_name) {
                 EnrolleeSchool::create([
                     'name' => $request->college_name,
-                    // 'year_graduated' => $request->college_year_graduated ?? '',
-                    // 'address' => $request->college_address ?? '',
                     'type' => 'CL',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
@@ -96,8 +92,6 @@ class EnrolleeService
             if ($request->masters_name) {
                 EnrolleeSchool::create([
                     'name' => $request->masters_name,
-                    // 'year_graduated' => $request->masters_year_graduated ?? '',
-                    // 'address' => $request->masters_address ?? '',
                     'type' => 'MS',
                     'enrollee_id' => $enrolleeObject->id,
                 ]);
