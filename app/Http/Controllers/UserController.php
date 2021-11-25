@@ -7,11 +7,18 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Models\Student;
 use App\Models\User;
 use App\Models\UserDetail;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    protected $service;
+
+    public function __construct()
+    {
+        $this->service = new UserService();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,13 +27,7 @@ class UserController extends Controller
     public function index(ResourceFilters $filters, User $user)
     {
         return $this->generateCachedResponse(function () use ($filters, $user) {
-            $users = $user->with([
-                        'detail',
-                        'student',
-                        'school',
-                    ])
-                    ->filter($filters)
-                    ->where('status', '!=', 2);
+            $users = $this->service->index($filters, $user);
 
             return $this->paginateOrGet($users);
         });
@@ -50,36 +51,10 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $request, User $user)
     {
+
         $request = $request->validated();
-        try {
-            DB::beginTransaction();
-            $userObject = new User($request);
-            $userObject->password = 'Password@123';
-            $userObject->save();
-
-            $userDetail = new UserDetail($request);
-            $userDetail->user_id = $userObject->id;
-            $userDetail->save();
-
-            switch ($request['account_type']) {
-                // student
-                case 4:
-                    $userObject->account_type = 4;
-                    $student = new Student($request);
-                    $student->user_id = $userObject->id;
-                    $student->save();
-                    break;
-                default:
-                    // code...
-                    break; }
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-
-            return response($th->getMessage(), 400);
-        }
-
-        return response('Created', 201);
+        $result = $this->service->store($request);
+        return response($result, 201);
     }
 
     /**
@@ -125,9 +100,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->status = 2;
-        $user->save();
-
-        return response($user);
+        $this->service->delete($user);
+        return response(['message' => 'User deleted successfully.'], 200);
     }
 }
