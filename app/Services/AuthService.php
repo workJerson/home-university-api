@@ -4,8 +4,11 @@ namespace App\Services;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Test\Constraint\ResponseStatusCodeSame;
 
 class AuthService
 {
@@ -71,6 +74,29 @@ class AuthService
 
         return [
             'message' => trans($status),
+            'status' => $statusCode,
+        ];
+    }
+
+    public function resetPassword($request){
+        $statusCode = 400;
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) use ($request) {
+                $user->password = $password;
+                $user->save();
+
+                $user->setRememberToken(Str::random(60));
+
+                event(new PasswordReset($user));
+            }
+        );
+        if ($status == Password::PASSWORD_RESET) {
+            $statusCode = 200;
+        }
+        return [
+            'message' => trans($statusCode),
             'status' => $statusCode,
         ];
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Services\AuthService;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -9,59 +11,17 @@ use Illuminate\Support\Str;
 
 class ResetPasswordController extends Controller
 {
+    protected $service;
     public function __construct()
     {
+        $this->service = new AuthService();
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $this->validate($request, $this->rules(), $this->validationErrorMessages());
+        $request->validate();
+        $result = $this->service->resetPassword($request);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) use ($request) {
-                $user->password = $password;
-                $user->save();
-
-                $user->setRememberToken(Str::random(60));
-
-                event(new PasswordReset($user));
-            }
-        );
-
-        return $status == Password::PASSWORD_RESET
-            ? $this->sendResetResponse($status)
-            : $this->sendResetFailedResponse($request, $status);
-    }
-
-    protected function rules()
-    {
-        return [
-            'token' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed|between:8,20'
-                .'|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d.*)(?=.*\S.*)\S*$/',
-        ];
-    }
-
-    protected function sendResetResponse($response)
-    {
-        return response([
-            'message' => trans($response),
-        ]);
-    }
-
-    protected function sendResetFailedResponse(Request $request, $response)
-    {
-        return response([
-            'message' => trans($response),
-        ], 400);
-    }
-
-    protected function validationErrorMessages()
-    {
-        return [
-            'password.regex' => 'Password must have at least one uppercase letter, one lowercase letter, one number and one special character.',
-        ];
+        return response($result['message'], $result['status']);
     }
 }
