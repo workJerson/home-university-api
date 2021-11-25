@@ -2,53 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\EnrolleeExport;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Enrollee\CreateEnrolleeRequest;
 use App\Http\Requests\Enrollee\UpdateEnrolleeRequest;
-use App\Mail\EmailSend;
 use App\Models\Enrollee;
-use App\Models\EnrolleeAttachment;
-use App\Models\EnrolleeSchool;
-use Barryvdh\DomPDF\Facade as PDF;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
+use App\Services\EnrolleeService;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 
 class EnrolleeController extends Controller
 {
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new EnrolleeService();
+    }
+
     public function generateCredential(Enrollee $enrollee)
     {
-        $enrollees['enrollees'] = [$enrollee
-            ->load([
-                'program',
-                'course',
-                'region',
-                'province',
-                'city',
-                'attachments',
-            ]), ];
-
-        $pdf = PDF::loadView('pdf.credential', $enrollees);
-        $fileName = Carbon::now()->format('Ymdhis');
-
-        return $pdf->download("CRED$fileName.pdf");
+        return $this->service->downloadCredential($enrollee);
     }
 
     public function generateReport(ResourceFilters $filters, Enrollee $enrollee)
     {
-        $date = Carbon::now()->format('Ymdhis');
-
-        return Excel::download(
-            new EnrolleeExport(
-                $enrollee
-                    ->filter($filters)
-                    ->with([
-                    ])
-                    ->get()
-            ), "ENROLLEES$date.xlsx");
+        return $this->service->downloadReport($filters, $enrollee);
     }
 
     /**
@@ -59,14 +36,7 @@ class EnrolleeController extends Controller
     public function index(ResourceFilters $filters, Enrollee $enrollee)
     {
         return $this->generateCachedResponse(function () use ($filters, $enrollee) {
-            $enrollees = $enrollee->with([
-                'program',
-                'course',
-                'region',
-                'province',
-                'city',
-                'attachments',
-                ])->filter($filters);
+            $enrollees = $this->service->index($filters, $enrollee);
 
             return $this->paginateOrGet($enrollees);
         });
@@ -90,67 +60,8 @@ class EnrolleeController extends Controller
      */
     public function store(CreateEnrolleeRequest $request, Enrollee $enrollee)
     {
-        try {
-            DB::beginTransaction();
-            $attachments = [];
-            $enrolleeObject = $enrollee->create($request->validated());
-
-            if ($request->hs_name) {
-                EnrolleeSchool::create([
-                    'name' => $request->hs_name,
-                    // 'year_graduated' => $request->hs_year_graduated ?? '',
-                    // 'address' => $request->hs_address ?? '',
-                    'type' => 'HS',
-                    'enrollee_id' => $enrolleeObject->id,
-                ]);
-            }
-
-            if ($request->college_name) {
-                EnrolleeSchool::create([
-                    'name' => $request->college_name,
-                    // 'year_graduated' => $request->college_year_graduated ?? '',
-                    // 'address' => $request->college_address ?? '',
-                    'type' => 'CL',
-                    'enrollee_id' => $enrolleeObject->id,
-                ]);
-            }
-
-            if ($request->masters_name) {
-                EnrolleeSchool::create([
-                    'name' => $request->masters_name,
-                    // 'year_graduated' => $request->masters_year_graduated ?? '',
-                    // 'address' => $request->masters_address ?? '',
-                    'type' => 'MS',
-                    'enrollee_id' => $enrolleeObject->id,
-                ]);
-            }
-
-            if ($request->profile_picture) {
-                $path = Storage::putFile('images', $request->file('profile_picture'), 'public');
-                $enrolleeObject->profile_picture = $path;
-                $enrolleeObject->save();
-            }
-
-            if ($request->attachments) {
-                foreach ($request->file('attachments') as $key => $file) {
-                    $path = Storage::putFile('images', $file, 'public');
-                    $attachments[] = [
-                        'file_type' => $file->extension(),
-                        'file_name' => basename($path),
-                        'file_path' => $path,
-                        'enrollee_id' => $enrolleeObject->id,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-                }
-                EnrolleeAttachment::insert($attachments);
-            }
-            DB::commit();
-            // Mail::to($enrolleeObject->primary_email)->send(new EmailSend(['name' => $enrolleeObject->full_name, 'subject' => 'Pre-Enrollment'], 'mail.enrollee.new'));
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
+        $request->validate();
+        $enrolleeObject = $this->service->store($request->all(), $enrollee);
 
         return response($enrolleeObject, 201);
     }
@@ -182,28 +93,8 @@ class EnrolleeController extends Controller
      */
     public function update(UpdateEnrolleeRequest $request, Enrollee $enrollee)
     {
-        $request->validated();
-        try {
-            DB::beginTransaction();
-
-            if ($request->enrollment_status) {
-                switch ($request->enrollment_status) {
-                    case 1:
-                        // code...
-                        break;
-
-                    default:
-                        // code...
-                        break;
-                }
-            }
-            $enrollee->update($request->all());
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
+        $request->validate();
+        $enrollee = $this->service->update($request->all(), $enrollee);
 
         return response($enrollee);
     }
@@ -215,8 +106,7 @@ class EnrolleeController extends Controller
      */
     public function destroy(Enrollee $enrollee)
     {
-        $enrollee->status = 2;
-        $enrollee->save();
+        $this->service->delete($enrollee);
 
         return response(['message' => 'Successfully deleted.'], 200);
     }
