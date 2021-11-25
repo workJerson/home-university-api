@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Testimonial\CreateTestimonialRequest;
 use App\Models\Testimonial;
+use App\Services\TestimonialService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
 {
+    protected $service;
+
+    public function __construct()
+    {
+        $this->service = new TestimonialService();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,8 +25,7 @@ class TestimonialController extends Controller
     public function index(ResourceFilters $filters, Testimonial $testimonial)
     {
         return $this->generateCachedResponse(function () use ($filters, $testimonial) {
-            $testimonials = $testimonial->with([
-                ])->filter($filters);
+            $testimonials = $this->service->index($filters, $testimonial);
 
             return $this->paginateOrGet($testimonials);
         });
@@ -41,44 +47,17 @@ class TestimonialController extends Controller
      */
     public function store(CreateTestimonialRequest $request, Testimonial $testimonial)
     {
-        try {
-            DB::beginTransaction();
-            $testimonialObject = $testimonial->create($request->validated());
+        $request->validated();
+        $result = $this->service->store($request, $testimonial);
 
-            if ($request->image) {
-                $path = Storage::putFile('images', $request->file('image'), 'public');
-                $testimonialObject->image_path = $path;
-                $testimonialObject->save();
-            }
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
-
-        return response($testimonialObject, 201);
+        return response($result, 201);
     }
 
     public function updateTestimony(CreateTestimonialRequest $request, Testimonial $testimonial)
     {
-        try {
-            DB::beginTransaction();
-            $testimonial = $testimonial->findOrFail($request->id);
-            $testimonial->update($request->validated());
-
-            if ($request->image) {
-                $path = Storage::putFile('images', $request->file('image'), 'public');
-                $testimonial->image_path = $path;
-                $testimonial->save();
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
-
-        return response($testimonial);
+        $request->validated();
+        $result = $this->service->update($request, $testimonial);
+        return response($result);
     }
 
     /**
@@ -109,23 +88,9 @@ class TestimonialController extends Controller
      */
     public function update(CreateTestimonialRequest $request, Testimonial $testimonial)
     {
-        try {
-            DB::beginTransaction();
-            $testimonial->update($request->validated());
-
-            if ($request->image) {
-                $path = Storage::putFile('images', $request->file('image'), 'public');
-                $testimonial->image_path = $path;
-                $testimonial->save();
-            }
-
-            DB::commit();
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            throw $th;
-        }
-
-        return response($testimonial);
+        $request->validated();
+        $result = $this->service->update($request, $testimonial);
+        return response($result);
     }
 
     /**
@@ -135,9 +100,7 @@ class TestimonialController extends Controller
      */
     public function destroy(Testimonial $testimonial)
     {
-        $testimonial->status = 2;
-        $testimonial->save();
-
+        $this->service->delete($testimonial);
         return response(['message' => 'Successfully deleted'], 200);
     }
 }
