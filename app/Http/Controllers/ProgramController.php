@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ResourceFilters;
 use App\Http\Requests\Program\CreateProgramRequest;
 use App\Models\Program;
+use App\Services\ProgramService;
 
 class ProgramController extends Controller
 {
+    protected $service;
+
     public function __constructor()
     {
+        $this->service = new ProgramService();
     }
 
     public function __invoke(Program $program)
@@ -33,8 +37,7 @@ class ProgramController extends Controller
     public function index(ResourceFilters $filters, Program $program)
     {
         return $this->generateCachedResponse(function () use ($filters, $program) {
-            $programs = $program->with([
-                ])->filter($filters);
+            $programs = $this->service->index($filters, $program);
 
             return $this->paginateOrGet($programs);
         });
@@ -56,9 +59,10 @@ class ProgramController extends Controller
      */
     public function store(CreateProgramRequest $request, Program $program)
     {
-        $programObject = $program->create($request->validated());
+        $request->validate();
+        $result = $this->service->store($request->all(), $program);
 
-        return response($programObject, 201);
+        return response($result, 201);
     }
 
     /**
@@ -93,7 +97,8 @@ class ProgramController extends Controller
      */
     public function update(CreateProgramRequest $request, Program $program)
     {
-        $program->update($request->validated());
+        $request->validate();
+        $program = $this->service->update($request->all(), $program);
 
         return response($program);
     }
@@ -105,8 +110,7 @@ class ProgramController extends Controller
      */
     public function destroy(Program $program)
     {
-        $program->status = 2;
-        $program->save();
+        $this->service->delete($program);
 
         return response(['message' => 'Successfully deleted'], 200);
     }
