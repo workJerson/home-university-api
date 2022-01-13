@@ -119,7 +119,7 @@ class CoursesTableSeeder extends Seeder
                 'name' => 'Master in Business Administration',
                 'description' => 'Master in Business Administration',
                 'program_id' => 2,
-                'status' => 2,
+                'status' => 1,
             ],
             [
                 'id' => 16,
