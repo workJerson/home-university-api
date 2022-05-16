@@ -21,21 +21,20 @@ class EnrolleeController extends Controller
 {
     public function generateCredential(Enrollee $enrollee)
     {
-        // $enrollees['enrollees'] = [$enrollee
-        //     ->load([
-        //         'program',
-        //         'course',
-        //         'region',
-        //         'province',
-        //         'city',
-        //         'attachments',
-        //     ]), ];
+        $enrollees['enrollees'] = [$enrollee
+            ->load([
+                'program',
+                'course',
+                'region',
+                'province',
+                'city',
+                'attachments',
+            ]), ];
 
-        // $pdf = PDF::loadView('pdf.credential', $enrollees);
-        // $fileName = Carbon::now()->format('Ymdhis');
+        $pdf = PDF::loadView('pdf.credential', $enrollees);
+        $fileName = Carbon::now()->format('Ymdhis');
 
-        // return $pdf->download("CRED$fileName.pdf");
-        return response('Server Error', 502);
+        return $pdf->download("CRED$fileName.pdf");
     }
 
     public function generateReport(ResourceFilters $filters, Enrollee $enrollee)
